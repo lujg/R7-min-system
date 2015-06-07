@@ -25,6 +25,7 @@ endgroup
 startgroup
 create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.0 axi_bram_ctrl_0
 endgroup
+set_property -dict [list CONFIG.SINGLE_PORT_BRAM {1}] [get_bd_cells axi_bram_ctrl_0]
 startgroup
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config {Master "/processing_system7_0/M_AXI_GP0" Clk "Auto" }  [get_bd_intf_pins axi_gpio_0/S_AXI]
 apply_bd_automation -rule xilinx.com:bd_rule:board  [get_bd_intf_pins axi_gpio_0/GPIO]
@@ -32,16 +33,107 @@ apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config {Master "/processing_s
 endgroup
 set_property range 256K [get_bd_addr_segs {processing_system7_0/Data/SEG_axi_bram_ctrl_0_Mem0}]
 set_property -dict [list CONFIG.C_GPIO_WIDTH {4} CONFIG.C_ALL_OUTPUTS {1}] [get_bd_cells axi_gpio_0]
-startgroup
-apply_bd_automation -rule xilinx.com:bd_rule:bram_cntlr -config {BRAM "New Blk_Mem_Gen" }  [get_bd_intf_pins axi_bram_ctrl_0/BRAM_PORTA]
-apply_bd_automation -rule xilinx.com:bd_rule:bram_cntlr -config {BRAM "/axi_bram_ctrl_0_bram" }  [get_bd_intf_pins axi_bram_ctrl_0/BRAM_PORTB]
-endgroup
+
+#startgroup
+#apply_bd_automation -rule xilinx.com:bd_rule:bram_cntlr -config {BRAM "New Blk_Mem_Gen" }  [get_bd_intf_pins axi_bram_ctrl_0/BRAM_PORTA]
+#apply_bd_automation -rule xilinx.com:bd_rule:bram_cntlr -config {BRAM "/axi_bram_ctrl_0_bram" }  [get_bd_intf_pins axi_bram_ctrl_0/BRAM_PORTB]
+#endgroup
+#delete_bd_objs [get_bd_intf_nets axi_bram_ctrl_0_BRAM_PORTA] [get_bd_cells axi_bram_ctrl_0_bram]
+
 set_property name TEST_LED [get_bd_intf_ports gpio_rtl]
+
+startgroup
+create_bd_intf_port -mode Master -vlnv xilinx.com:interface:bram_rtl:1.0 BRAM_PORTA
+set_property CONFIG.MASTER_TYPE [get_property CONFIG.MASTER_TYPE [get_bd_intf_pins axi_bram_ctrl_0/BRAM_PORTA]] [get_bd_intf_ports BRAM_PORTA]
+connect_bd_intf_net [get_bd_intf_pins axi_bram_ctrl_0/BRAM_PORTA] [get_bd_intf_ports BRAM_PORTA]
+endgroup
+startgroup
+create_bd_port -dir O -from 0 -to 0 ENET0_GMII_TX_EN
+connect_bd_net [get_bd_pins /processing_system7_0/ENET0_GMII_TX_EN] [get_bd_ports ENET0_GMII_TX_EN]
+endgroup
+
+startgroup
+create_bd_port -dir O -from 0 -to 0 ENET0_GMII_TX_ER
+connect_bd_net [get_bd_pins /processing_system7_0/ENET0_GMII_TX_ER] [get_bd_ports ENET0_GMII_TX_ER]
+endgroup
+
+startgroup
+create_bd_port -dir O -from 7 -to 0 ENET0_GMII_TXD
+connect_bd_net [get_bd_pins /processing_system7_0/ENET0_GMII_TXD] [get_bd_ports ENET0_GMII_TXD]
+endgroup
+
+startgroup
+create_bd_port -dir I ENET0_GMII_RX_CLK
+connect_bd_net [get_bd_pins /processing_system7_0/ENET0_GMII_RX_CLK] [get_bd_ports ENET0_GMII_RX_CLK]
+endgroup
+
+startgroup
+create_bd_port -dir I ENET0_GMII_RX_DV
+connect_bd_net [get_bd_pins /processing_system7_0/ENET0_GMII_RX_DV] [get_bd_ports ENET0_GMII_RX_DV]
+endgroup
+startgroup
+create_bd_port -dir I ENET0_GMII_RX_ER
+connect_bd_net [get_bd_pins /processing_system7_0/ENET0_GMII_RX_ER] [get_bd_ports ENET0_GMII_RX_ER]
+endgroup
+startgroup
+create_bd_port -dir I ENET0_GMII_TX_CLK
+connect_bd_net [get_bd_pins /processing_system7_0/ENET0_GMII_TX_CLK] [get_bd_ports ENET0_GMII_TX_CLK]
+endgroup
+startgroup
+create_bd_port -dir I -from 7 -to 0 ENET0_GMII_RXD
+connect_bd_net [get_bd_pins /processing_system7_0/ENET0_GMII_RXD] [get_bd_ports ENET0_GMII_RXD]
+endgroup
+startgroup
+create_bd_port -dir O ENET0_MDIO_MDC
+connect_bd_net [get_bd_pins /processing_system7_0/ENET0_MDIO_MDC] [get_bd_ports ENET0_MDIO_MDC]
+endgroup
+startgroup
+create_bd_port -dir O ENET0_MDIO_O
+connect_bd_net [get_bd_pins /processing_system7_0/ENET0_MDIO_O] [get_bd_ports ENET0_MDIO_O]
+endgroup
+startgroup
+create_bd_port -dir O ENET0_MDIO_T
+connect_bd_net [get_bd_pins /processing_system7_0/ENET0_MDIO_T] [get_bd_ports ENET0_MDIO_T]
+endgroup
+startgroup
+create_bd_port -dir I ENET0_MDIO_I
+connect_bd_net [get_bd_pins /processing_system7_0/ENET0_MDIO_I] [get_bd_ports ENET0_MDIO_I]
+endgroup
+
 regenerate_bd_layout
 save_bd_design
 generate_target all [get_files  R7MS.srcs/sources_1/bd/miniarm/miniarm.bd]
 make_wrapper -files [get_files R7MS.srcs/sources_1/bd/miniarm/miniarm.bd] -top
 add_files -norecurse R7MS.srcs/sources_1/bd/miniarm/hdl/miniarm_wrapper.vhd
+
+create_bd_design "clk_125M"
+current_bd_design [get_bd_designs clk_125M]
+update_compile_order -fileset sources_1
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:5.1 clk_wiz_0
+endgroup
+startgroup
+set_property -dict [list CONFIG.PRIM_IN_FREQ.VALUE_SRC USER] [get_bd_cells clk_wiz_0]
+set_property -dict [list CONFIG.PRIM_IN_FREQ {25} CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {125.000} CONFIG.CLKIN1_JITTER_PS {400.0} CONFIG.MMCM_CLKFBOUT_MULT_F {40.000} CONFIG.MMCM_CLKIN1_PERIOD {40.0} CONFIG.MMCM_CLKOUT0_DIVIDE_F {8.000} CONFIG.CLKOUT1_JITTER {220.126} CONFIG.CLKOUT1_PHASE_ERROR {237.727}] [get_bd_cells clk_wiz_0]
+endgroup
+startgroup
+apply_bd_automation -rule xilinx.com:bd_rule:board  [get_bd_pins clk_wiz_0/clk_in1]
+apply_bd_automation -rule xilinx.com:bd_rule:board -config {rst_polarity "ACTIVE_HIGH" }  [get_bd_pins clk_wiz_0/reset]
+endgroup
+startgroup
+create_bd_port -dir O -type clk clk_out1
+connect_bd_net [get_bd_pins /clk_wiz_0/clk_out1] [get_bd_ports clk_out1]
+endgroup
+startgroup
+create_bd_port -dir O locked
+connect_bd_net [get_bd_pins /clk_wiz_0/locked] [get_bd_ports locked]
+endgroup
+save_bd_design
+
+make_wrapper -files [get_files R7MS.srcs/sources_1/bd/clk_125M/clk_125M.bd] -top
+add_files -norecurse R7MS.srcs/sources_1/bd/clk_125M/hdl/clk_125M_wrapper.vhd
+update_compile_order -fileset sources_1
+
 import_files -norecurse src/R7MS_top.vhd
 update_compile_order -fileset sources_1
 update_compile_order -fileset sim_1

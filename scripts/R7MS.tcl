@@ -117,8 +117,14 @@ set_property -dict [list CONFIG.PRIM_IN_FREQ.VALUE_SRC USER] [get_bd_cells clk_w
 set_property -dict [list CONFIG.PRIM_IN_FREQ {25} CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {125.000} CONFIG.CLKIN1_JITTER_PS {400.0} CONFIG.MMCM_CLKFBOUT_MULT_F {40.000} CONFIG.MMCM_CLKIN1_PERIOD {40.0} CONFIG.MMCM_CLKOUT0_DIVIDE_F {8.000} CONFIG.CLKOUT1_JITTER {220.126} CONFIG.CLKOUT1_PHASE_ERROR {237.727}] [get_bd_cells clk_wiz_0]
 endgroup
 startgroup
-apply_bd_automation -rule xilinx.com:bd_rule:board  [get_bd_pins clk_wiz_0/clk_in1]
-apply_bd_automation -rule xilinx.com:bd_rule:board -config {rst_polarity "ACTIVE_HIGH" }  [get_bd_pins clk_wiz_0/reset]
+create_bd_port -dir I -type clk clk_in1
+set_property CONFIG.FREQ_HZ [get_property CONFIG.FREQ_HZ [get_bd_pins clk_wiz_0/clk_in1]] [get_bd_ports clk_in1]
+connect_bd_net [get_bd_pins /clk_wiz_0/clk_in1] [get_bd_ports clk_in1]
+endgroup
+startgroup
+create_bd_port -dir I -type rst reset
+set_property CONFIG.POLARITY [get_property CONFIG.POLARITY [get_bd_pins clk_wiz_0/reset]] [get_bd_ports reset]
+connect_bd_net [get_bd_pins /clk_wiz_0/reset] [get_bd_ports reset]
 endgroup
 startgroup
 create_bd_port -dir O -type clk clk_out1

@@ -112,10 +112,10 @@ architecture top of led_top is
   end component;
   component clk_125M_wrapper is
   port (
-    clock_rtl : in STD_LOGIC;
-    reset_rtl : in STD_LOGIC;
+    clk_in1 : in STD_LOGIC;
     clk_out1 : out STD_LOGIC;
-    locked : out STD_LOGIC
+    locked : out STD_LOGIC;
+    reset : in STD_LOGIC
   );
   end component clk_125M_wrapper;
 signal clk_125M		: std_logic					:= '0';
@@ -124,19 +124,25 @@ signal pll_locked	: std_logic					:= '0';
 signal ENET0_MDIO_O 	: std_logic					:= '0';
 signal ENET0_MDIO_T 	: std_logic					:= '0';
 signal ENET0_MDIO_I 	: std_logic					:= '0';
-signal GMII_TX_EN	: std_logic					:= '0'; 
-signal GMII_TX_ER	: std_logic					:= '0';
-signal GMII_TXD		: std_logic_vector(7 downto 0)	:= (others => '0');
-signal GMII_TX_CLK	: std_logic					:= '0';
-signal GMII_RX_ER 	: std_logic					:= '0';
-signal GMII_RX_DV	: std_logic					:= '0';
-signal GMII_RXD 	: std_logic_vector(7 downto 0)	:= (others => '0');
-signal GMII_RX_CLK	: std_logic					:= '0';
+signal BRAM_PORTA_addr : STD_LOGIC_VECTOR ( 17 downto 0 );
+signal BRAM_PORTA_clk : STD_LOGIC;
+signal BRAM_PORTA_din : STD_LOGIC_VECTOR ( 31 downto 0 );
+signal BRAM_PORTA_dout : STD_LOGIC_VECTOR ( 31 downto 0 );
+signal BRAM_PORTA_en : STD_LOGIC;
+signal BRAM_PORTA_rst : STD_LOGIC;
+signal BRAM_PORTA_we : STD_LOGIC_VECTOR ( 3 downto 0 );
 
 begin
 
 miniarm: component miniarm_wrapper
     port map (
+      BRAM_PORTA_addr(17 downto 0) => BRAM_PORTA_addr(17 downto 0),
+    BRAM_PORTA_clk => BRAM_PORTA_clk,
+    BRAM_PORTA_din(31 downto 0) => BRAM_PORTA_din(31 downto 0),
+    BRAM_PORTA_dout(31 downto 0) => BRAM_PORTA_dout(31 downto 0),
+    BRAM_PORTA_en => BRAM_PORTA_en,
+    BRAM_PORTA_rst => BRAM_PORTA_rst,
+    BRAM_PORTA_we(3 downto 0) => BRAM_PORTA_we(3 downto 0),
       DDR_addr(14 downto 0) => DDR_addr(14 downto 0),
       DDR_ba(2 downto 0) => DDR_ba(2 downto 0),
       DDR_cas_n => DDR_cas_n,
@@ -159,11 +165,11 @@ miniarm: component miniarm_wrapper
       FIXED_IO_ps_porb => FIXED_IO_ps_porb,
       FIXED_IO_ps_srstb => FIXED_IO_ps_srstb,
       ENET0_GMII_RXD(7 downto 0) => GMII_RXD(7 downto 0),
-      ENET0_GMII_RX_CLK => GMII_RX_CLK,
+      ENET0_GMII_RX_CLK => GMII_RXCLK,
       ENET0_GMII_RX_DV => GMII_RX_DV,
       ENET0_GMII_RX_ER => GMII_RX_ER,
       ENET0_GMII_TXD(7 downto 0) => GMII_TXD(7 downto 0),
-      ENET0_GMII_TX_CLK => clk_125M,
+      ENET0_GMII_TX_CLK => GMII_TXCLK,
       ENET0_GMII_TX_EN(0) => GMII_TX_EN,
       ENET0_GMII_TX_ER(0) => GMII_TX_ER,
       ENET0_MDIO_I => ENET0_MDIO_I,
@@ -182,14 +188,14 @@ GMII_MDIO_iobuf : IOBUF
     T => ENET0_MDIO_T
   );
 
-  GMII_TX_CLK <= clk_125M;	
+  GMII_GTXCLK <= clk_125M;	
 
 clk_125M_i: component clk_125M_wrapper
     port map (
       clk_out1 => clk_125M,
-      clock_rtl => SYS_CLK,
+      clk_in1 => SYS_CLK,
       locked => pll_locked,
-      reset_rtl => pll_reset
+      reset => pll_reset
     );
 
 end top;

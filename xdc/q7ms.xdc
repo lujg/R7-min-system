@@ -31,137 +31,108 @@ set_property IOSTANDARD LVCMOS18 [get_ports {TEST_LED[2]}]
 set_property PACKAGE_PIN G1 [get_ports {TEST_LED[3]}]
 set_property IOSTANDARD LVCMOS18 [get_ports {TEST_LED[3]}]
 
-#D27
 set_property PACKAGE_PIN F10 [get_ports SPI_CLK]
 set_property IOSTANDARD LVCMOS18 [get_ports SPI_CLK]
-#D26
+
 set_property PACKAGE_PIN B6 [get_ports SPI_ENB]
 set_property IOSTANDARD LVCMOS18 [get_ports SPI_ENB]
-#C26
+
 set_property PACKAGE_PIN H7 [get_ports SPI_DI]
 set_property IOSTANDARD LVCMOS18 [get_ports SPI_DI]
-#C27
+
 set_property PACKAGE_PIN B12 [get_ports SPI_DO]
 set_property IOSTANDARD LVCMOS18 [get_ports SPI_DO]
 
-#H31
 set_property PACKAGE_PIN C11 [get_ports AD9361_RST]
 set_property IOSTANDARD LVCMOS18 [get_ports AD9361_RST]
-#G18
+
 set_property PACKAGE_PIN A5 [get_ports AD9361_EN]
 set_property IOSTANDARD LVCMOS18 [get_ports AD9361_EN]
-#G19
+
 set_property PACKAGE_PIN H6 [get_ports AD9361_Tx_Rx]
 set_property IOSTANDARD LVCMOS18 [get_ports AD9361_Tx_Rx]
-#H22
+
 set_property PACKAGE_PIN E10 [get_ports AD9361_EN_AGC]
 set_property IOSTANDARD LVCMOS18 [get_ports AD9361_EN_AGC]
 
-#D14
 set_property IOSTANDARD LVDS [get_ports AD9361_TX_Frame_P]
-#D15
 set_property PACKAGE_PIN D5 [get_ports AD9361_TX_Frame_N]
 set_property IOSTANDARD LVDS [get_ports AD9361_TX_Frame_N]
 
-#G12
 set_property IOSTANDARD LVDS [get_ports AD9361_FB_CLK_P]
-#G13
 set_property PACKAGE_PIN G5 [get_ports AD9361_FB_CLK_N]
 set_property IOSTANDARD LVDS [get_ports AD9361_FB_CLK_N]
 
-
-#H16
 set_property IOSTANDARD LVDS [get_ports {AD9361_TX_DATA_P[0]}]
-#H17
 set_property PACKAGE_PIN D8 [get_ports {AD9361_TX_DATA_N[0]}]
 set_property IOSTANDARD LVDS [get_ports {AD9361_TX_DATA_N[0]}]
 
-#G15
 set_property IOSTANDARD LVDS [get_ports {AD9361_TX_DATA_P[1]}]
-#G16
 set_property PACKAGE_PIN E8 [get_ports {AD9361_TX_DATA_N[1]}]
 set_property IOSTANDARD LVDS [get_ports {AD9361_TX_DATA_N[1]}]
 
-#D17
 set_property IOSTANDARD LVDS [get_ports {AD9361_TX_DATA_P[2]}]
-#D18
 set_property PACKAGE_PIN A7 [get_ports {AD9361_TX_DATA_N[2]}]
 set_property IOSTANDARD LVDS [get_ports {AD9361_TX_DATA_N[2]}]
 
-#C14
 set_property IOSTANDARD LVDS [get_ports {AD9361_TX_DATA_P[3]}]
-#C15
 set_property PACKAGE_PIN A8 [get_ports {AD9361_TX_DATA_N[3]}]
 set_property IOSTANDARD LVDS [get_ports {AD9361_TX_DATA_N[3]}]
 
-#C18
 set_property IOSTANDARD LVDS [get_ports {AD9361_TX_DATA_P[4]}]
-#C19
 set_property PACKAGE_PIN B9 [get_ports {AD9361_TX_DATA_N[4]}]
 set_property IOSTANDARD LVDS [get_ports {AD9361_TX_DATA_N[4]}]
 
-#H19
 set_property IOSTANDARD LVDS [get_ports {AD9361_TX_DATA_P[5]}]
-#H20
 set_property PACKAGE_PIN A10 [get_ports {AD9361_TX_DATA_N[5]}]
 set_property IOSTANDARD LVDS [get_ports {AD9361_TX_DATA_N[5]}]
 
-#D8 01P
 set_property IOSTANDARD LVDS [get_ports AD9361_RX_Frame_P]
 set_property DIFF_TERM TRUE [get_ports AD9361_RX_Frame_P]
-#D9	01N
 set_property PACKAGE_PIN C6 [get_ports AD9361_RX_Frame_N]
 set_property IOSTANDARD LVDS [get_ports AD9361_RX_Frame_N]
 set_property DIFF_TERM TRUE [get_ports AD9361_RX_Frame_N]
 
-#G6 00P
 set_property IOSTANDARD LVDS [get_ports AD9361_DATA_CLK_P]
-#G7 00N
 set_property PACKAGE_PIN C7 [get_ports AD9361_DATA_CLK_N]
 set_property IOSTANDARD LVDS [get_ports AD9361_DATA_CLK_N]
 
-#H8 02N
 set_property IOSTANDARD LVDS [get_ports {AD9361_RX_DATA_N[0]}]
 set_property DIFF_TERM TRUE [get_ports {AD9361_RX_DATA_N[0]}]
-#H7 02P
 set_property PACKAGE_PIN F5 [get_ports {AD9361_RX_DATA_P[0]}]
 set_property IOSTANDARD LVDS [get_ports {AD9361_RX_DATA_P[0]}]
 set_property DIFF_TERM TRUE [get_ports {AD9361_RX_DATA_P[0]}]
-#G10 03N
+
 set_property IOSTANDARD LVDS [get_ports {AD9361_RX_DATA_N[1]}]
 set_property DIFF_TERM TRUE [get_ports {AD9361_RX_DATA_N[1]}]
-#G9 03P
 set_property PACKAGE_PIN A4 [get_ports {AD9361_RX_DATA_P[1]}]
 set_property IOSTANDARD LVDS [get_ports {AD9361_RX_DATA_P[1]}]
 set_property DIFF_TERM TRUE [get_ports {AD9361_RX_DATA_P[1]}]
-#H11 04N
+
 set_property IOSTANDARD LVDS [get_ports {AD9361_RX_DATA_N[2]}]
 set_property DIFF_TERM TRUE [get_ports {AD9361_RX_DATA_N[2]}]
-#H10 04P
 set_property PACKAGE_PIN C4 [get_ports {AD9361_RX_DATA_P[2]}]
 set_property IOSTANDARD LVDS [get_ports {AD9361_RX_DATA_P[2]}]
 set_property DIFF_TERM TRUE [get_ports {AD9361_RX_DATA_P[2]}]
-#D12 05N
+
 set_property IOSTANDARD LVDS [get_ports {AD9361_RX_DATA_N[3]}]
 set_property DIFF_TERM TRUE [get_ports {AD9361_RX_DATA_N[3]}]
-#D11 05P
 set_property PACKAGE_PIN C2 [get_ports {AD9361_RX_DATA_P[3]}]
 set_property IOSTANDARD LVDS [get_ports {AD9361_RX_DATA_P[3]}]
 set_property DIFF_TERM TRUE [get_ports {AD9361_RX_DATA_P[3]}]
-#C11 06N
+
 set_property IOSTANDARD LVDS [get_ports {AD9361_RX_DATA_N[4]}]
 set_property DIFF_TERM TRUE [get_ports {AD9361_RX_DATA_N[4]}]
-#C10 06P
 set_property PACKAGE_PIN B2 [get_ports {AD9361_RX_DATA_P[4]}]
 set_property IOSTANDARD LVDS [get_ports {AD9361_RX_DATA_P[4]}]
 set_property DIFF_TERM TRUE [get_ports {AD9361_RX_DATA_P[4]}]
-#H14 07N
+
 set_property IOSTANDARD LVDS [get_ports {AD9361_RX_DATA_N[5]}]
 set_property DIFF_TERM TRUE [get_ports {AD9361_RX_DATA_N[5]}]
-#H13 07P
 set_property PACKAGE_PIN B5 [get_ports {AD9361_RX_DATA_P[5]}]
 set_property IOSTANDARD LVDS [get_ports {AD9361_RX_DATA_P[5]}]
 set_property DIFF_TERM TRUE [get_ports {AD9361_RX_DATA_P[5]}]
+
 create_clock -period 6.667 -name AD9361_DATA_CLK_P [get_ports AD9361_DATA_CLK_P]
 create_clock -period 6.667 -name AD9361_DATA_CLK_N [get_ports AD9361_DATA_CLK_N]
 set_input_delay -clock [get_clocks AD9361_DATA_CLK_P] -max 1.250 [get_ports {AD9361_RX_DATA_P[0] AD9361_RX_DATA_P[1] AD9361_RX_DATA_P[2] AD9361_RX_DATA_P[3] AD9361_RX_DATA_P[4] AD9361_RX_DATA_P[5] AD9361_RX_Frame_P}]

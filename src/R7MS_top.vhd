@@ -110,14 +110,14 @@ architecture top of led_top is
     IO : inout STD_LOGIC
   );
   end component;
-  component clk_125M_wrapper is
+  component clk_wiz_0 is
   port (
     clk_in1 : in STD_LOGIC;
     clk_out1 : out STD_LOGIC;
     locked : out STD_LOGIC;
     reset : in STD_LOGIC
   );
-  end component clk_125M_wrapper;
+  end component clk_wiz_0;
 signal clk_125M		: std_logic					:= '0';
 signal pll_reset	: std_logic					:= '0';
 signal pll_locked	: std_logic					:= '0';
@@ -190,7 +190,7 @@ GMII_MDIO_iobuf : IOBUF
 
   GMII_GTXCLK <= clk_125M;	
 
-clk_125M_i: component clk_125M_wrapper
+clk_125M_i: component clk_wiz_0
     port map (
       clk_out1 => clk_125M,
       clk_in1 => SYS_CLK,

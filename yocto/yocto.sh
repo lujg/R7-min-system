@@ -1,4 +1,4 @@
-git clone https://github.com/Xilinx/meta-xilinx.git
+git clone git://git.yoctoproject.org/meta-xilinx
 git://git.openembedded.org/openembedded-core
 git clone git://git.yoctoproject.org/poky.git
 cd meta-xilinx

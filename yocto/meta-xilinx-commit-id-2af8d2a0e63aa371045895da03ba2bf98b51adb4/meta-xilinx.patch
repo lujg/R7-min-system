@@ -74,10 +74,10 @@ index 0000000..b41d241
 +};
 diff --git a/conf/machine/boards/r7/system.dts b/conf/machine/boards/r7/system.dts
 new file mode 100644
-index 0000000..94935e6
+index 0000000..879292a
 --- /dev/null
 +++ b/conf/machine/boards/r7/system.dts
-@@ -0,0 +1,426 @@
+@@ -0,0 +1,431 @@
 +/dts-v1/;
 +
 +/ {
@@ -354,10 +354,15 @@ index 0000000..94935e6
 +			#size-cells = <0x0>;
 +			phy-mode = "gmii";
 +			xlnx,ptp-enet-clock = <0x69f6bcb>;
-+
++			phy-handle = <&phy0>;
 +			mdio {
 +				#address-cells = <0x1>;
 +				#size-cells = <0x0>;
++				phy0: phy@0 {
++					compatible = "smsc,lan8810i";
++					device_type = "ethernet-phy";
++					reg = <0>;
++				} ;
 +			};
 +		};
 +

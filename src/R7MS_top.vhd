@@ -9,6 +9,8 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use ieee.std_logic_unsigned.all; 
+use ieee.std_logic_arith.all;
 library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity led_top is
@@ -132,6 +134,10 @@ signal BRAM_PORTA_en : STD_LOGIC;
 signal BRAM_PORTA_rst : STD_LOGIC;
 signal BRAM_PORTA_we : STD_LOGIC_VECTOR ( 3 downto 0 );
 
+signal ENET0_GMII_TX_CLK : STD_LOGIC;
+signal GMII_GE_IND_reg	: std_logic := '0';
+signal GMII_GE_TIMER : std_logic_vector( 27 downto 0 );
+
 begin
 
 miniarm: component miniarm_wrapper
@@ -169,7 +175,7 @@ miniarm: component miniarm_wrapper
       ENET0_GMII_RX_DV => GMII_RX_DV,
       ENET0_GMII_RX_ER => GMII_RX_ER,
       ENET0_GMII_TXD(7 downto 0) => GMII_TXD(7 downto 0),
-      ENET0_GMII_TX_CLK => GMII_TXCLK,
+      ENET0_GMII_TX_CLK => ENET0_GMII_TX_CLK,
       ENET0_GMII_TX_EN(0) => GMII_TX_EN,
       ENET0_GMII_TX_ER(0) => GMII_TX_ER,
       ENET0_MDIO_I => ENET0_MDIO_I,
@@ -188,7 +194,6 @@ GMII_MDIO_iobuf : IOBUF
     T => ENET0_MDIO_T
   );
 
-  GMII_GTXCLK <= clk_125M;	
 
 clk_125M_i: component clk_wiz_0
     port map (
@@ -197,5 +202,24 @@ clk_125M_i: component clk_wiz_0
       locked => pll_locked,
       reset => pll_reset
     );
+
+Reg_GMII_GE_IND	: process(clk_125M)
+begin
+      if rising_edge(clk_125M) then
+        if GMII_GE_IND = '1' then
+            GMII_GE_IND_reg <= '1';
+            GMII_GE_TIMER <= X"0000000";
+        else
+            if GMII_GE_TIMER = X"fffffff" then
+                GMII_GE_IND_reg <= '0';
+            else
+                GMII_GE_TIMER <= GMII_GE_TIMER+1;
+            end if;
+        end if;
+      end if;
+end process;
+
+GMII_GTXCLK <= clk_125M;	
+ENET0_GMII_TX_CLK <= clk_125M when GMII_GE_IND_reg = '1' else GMII_TXCLK;
 
 end top;
